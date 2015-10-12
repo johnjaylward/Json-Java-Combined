@@ -4,3 +4,6 @@
 [submodule "json-java-junit"]
 	path = src/test/org/json/junit
 	url = git@github.com:johnjaylward/JSON-Java-unit-test.git
+[submodule]
+	json-java = FixXMLNPE
+	json-java-junit = FixXMLNPE
