@@ -1,6 +1,8 @@
 [submodule "json-java"]
 	path = src/main/org/json
 	url = git@github.com:johnjaylward/JSON-java.git
+	branch = FixBigIntRead
 [submodule "json-java-junit"]
 	path = src/test/org/json/junit
 	url = git@github.com:johnjaylward/JSON-Java-unit-test.git
+	branch = FixBigIntRead
