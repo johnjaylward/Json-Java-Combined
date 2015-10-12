@@ -1,9 +1,8 @@
 [submodule "json-java"]
 	path = src/main/org/json
 	url = git@github.com:johnjaylward/JSON-java.git
+        branch = FixXMLNPE
 [submodule "json-java-junit"]
 	path = src/test/org/json/junit
 	url = git@github.com:johnjaylward/JSON-Java-unit-test.git
-[submodule]
-	json-java = FixXMLNPE
-	json-java-junit = FixXMLNPE
+        branch = FixXMLNPE
