@@ -3,7 +3,4 @@
 	url = git@github.com:johnjaylward/JSON-java.git
 [submodule "src/test/org/json/junit"]
 	path = src/test/org/json/junit
-	url = https://github.com/stleary/JSON-Java-unit-test.git
-[submodule "src/test/org/json/JSON-Java-unit-test"]
-	path = src/test/org/json/junit
 	url = git@github.com:johnjaylward/JSON-Java-unit-test.git
