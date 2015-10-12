@@ -1,0 +1,69 @@
+buildscript {
+    repositories {
+        // versions
+        jcenter()
+        // cobertura
+        mavenCentral()
+    }
+}
+
+apply plugin: 'maven'
+apply plugin: 'eclipse'
+apply plugin: 'java'
+
+group = 'org.json'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+task wrapper(type: Wrapper) { gradleVersion = '2.7' }
+
+eclipse {
+    classpath {
+        file {
+            withXml {
+                def xmlparser = new XmlParser()
+                def node = it.asNode()
+                node.findAll { entry -> entry['@kind'] == 'src' }.each {
+                    println it
+                    def attributes = xmlparser.createNode(it, 'attributes', [:])
+                    // buildship management flag so it doesn't overwrite our settings
+                    xmlparser.createNode(attributes,'attribute',[
+                        name:'FROM_GRADLE_MODEL',
+                        value:'true'
+                    ])
+                    // ignore problems with generated code
+                    if (it['@path'].contains('generated')) {
+                        xmlparser.createNode(attributes,'attribute',[
+                            name:'ignore_optional_problems',
+                            value:'true'
+                        ])
+                    }
+                    // don't exclude any resources from Eclipse. Excludes are generally for release only (jar/war)
+                    if (it['@path'].contains('resources')) {
+                        it['@excluding'] = ''
+                    }
+                }
+
+                //delete all the static libs and use the buildship container instead
+                node.findAll { entry -> entry['@kind'] == 'lib'}*.replaceNode{}
+                xmlparser.createNode(node,'classpathentry',[ exported:'true', kind:'con', path:'org.eclipse.buildship.core.gradleclasspathcontainer' ])
+            }
+        }
+        downloadJavadoc = true
+        downloadSources = true
+        defaultOutputDir = project.buildDir
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version:'4.12'
+    testCompile group: 'org.mockito', name:'mockito-all', version:'1.9.5'
+}
+
+test.useJUnit()
